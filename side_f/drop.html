@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drop game</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        #game {
+            width: 100vw;
+            height: 100vh;
+
+            margin: auto;
+            position: relative;
+            top: 12px;
+            background-color: white;
+        }
+
+        #character {
+            width: 50px;
+            height: 50px;
+            z-index: 1000000;
+            position: relative;
+            top: 440px;
+            left: 190px;
+        }
+
+        .block {
+            width: 100vw;
+            height: 20px;
+            background-color: black;
+            position: relative;
+            top: 0px;
+            margin-top: -20px;
+        }
+
+        .hole {
+            width: 60px;
+            height: 20px;
+            background-color: white;
+            position: relative;
+            top: 100px;
+            margin-top: -20px;
+        }
+
+        #score {
+            font-size: 30px;
+            font-family: Nunito;
+            position: absolute;
+            top: 80%;
+            left: 50%;
+        }
+
+        .tryagain {
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, .9);
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 3rem;
+            font-family: calibri light;
+
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game">
+        <img id="character" src="https://cdn-icons-png.flaticon.com/512/2632/2632839.png">
+        <a href="homepage.html"> <i class="fa fa-arrow-left"
+                style="font-size:30px; position:absolute; left:30px; top:80%; color:black;"></i> </a>
+    </div>
+    <div id="score"></div>
+    <div id="tryagain"></div>
+    \
+
+    <script>
+
+        var lose = document.getElementById('tryagain');
+        var score = document.getElementById('score');
+
+        var character = document.getElementById("character");
+        var game = document.getElementById("game");
+        var interval;
+        var both = 0;
+        var counter = 0;
+        var currentBlocks = [];
+
+        function moveLeft() {
+            var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+            if (left > 0) {
+                character.style.left = left - 2 + "px";
+            }
+        }
+        function moveRight() {
+            var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+            if (left < 380) {
+                character.style.left = left + 2 + "px";
+            }
+        }
+        document.addEventListener("keydown", event => {
+            if (both == 0) {
+                both++;
+                if (event.key === "ArrowLeft") {
+                    interval = setInterval(moveLeft, 1);
+                }
+                if (event.key === "ArrowRight") {
+                    interval = setInterval(moveRight, 1);
+                }
+            }
+        });
+        document.addEventListener("keyup", event => {
+            clearInterval(interval);
+            both = 0;
+        });
+
+        var blocks = setInterval(function () {
+            var blockLast = document.getElementById("block" + (counter - 1));
+            var holeLast = document.getElementById("hole" + (counter - 1));
+            if (counter > 0) {
+                var blockLastTop = parseInt(window.getComputedStyle(blockLast).getPropertyValue("top"));
+                var holeLastTop = parseInt(window.getComputedStyle(holeLast).getPropertyValue("top"));
+            }
+            if (blockLastTop < 400 || counter == 0) {
+                var block = document.createElement("div");
+                var hole = document.createElement("div");
+                block.setAttribute("class", "block");
+                hole.setAttribute("class", "hole");
+                block.setAttribute("id", "block" + counter);
+                hole.setAttribute("id", "hole" + counter);
+                block.style.top = blockLastTop + 100 + "px";
+                hole.style.top = holeLastTop + 100 + "px";
+                var random = Math.floor(Math.random() * 360);
+                hole.style.left = random + "px";
+                game.appendChild(block);
+                game.appendChild(hole);
+                currentBlocks.push(counter);
+                counter++;
+            }
+            var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+            var characterleft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+            var drop = 0;
+            if (characterTop <= 0) {
+
+                character.style.zIndex = "0";
+                clearInterval(blocks);
+                lose.classList.add('tryagain');
+                lose.innerHTML = "You lose!! <br> try again";
+            }
+            for (var i = 0; i < currentBlocks.length; i++) {
+                let current = currentBlocks[i];
+                let iblock = document.getElementById("block" + current);
+                let ihole = document.getElementById("hole" + current);
+                let iblockTop = parseFloat(window.getComputedStyle(iblock).getPropertyValue("top"));
+                let iholeLeft = parseFloat(window.getComputedStyle(ihole).getPropertyValue("left"));
+                iblock.style.top = iblockTop - 0.5 + "px";
+                ihole.style.top = iblockTop - 0.5 + "px";
+                if (iblockTop < -20) {
+                    currentBlocks.shift();
+                    iblock.remove();
+                    ihole.remove();
+                }
+                if (iblockTop - 20 < characterTop && iblockTop > characterTop) {
+                    drop++;
+                    if (iholeLeft <= characterleft && iholeLeft + 20 >= characterleft) {
+                        drop = 0;
+                    }
+                }
+            }
+            if (drop == 0) {
+                if (characterTop < 480) {
+                    character.style.top = characterTop + 2 + 'px';
+                }
+            } else {
+                character.style.top = characterTop - 0.5 + 'px';
+            }
+            var count = counter - 5;
+            score.innerHTML = 'score:' + count;
+
+        }, 1);
+
+    </script>
+</body>
+
+</html>

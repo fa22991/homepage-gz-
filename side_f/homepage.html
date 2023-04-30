@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+        * {
+            margin: 0;
+
+        }
+
+
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://media.istockphoto.com/vectors/digital-technology-gaming-abstract-background-vector-id1164222265?k=20&m=1164222265&s=170667a&w=0&h=IVofCowQw51bHMHrh7FYP6K8TWUu2opeZN6iQ3HmGPg=');
+            overflow: hidden;
+        }
+
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+
+
+        .waviy {
+            position: relative;
+            -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0, 0, 0, .2));
+            font-family: Bebas Neue;
+            font-size: 250px;
+            top: 160px;
+            left: 220px;
+            color: #fff;
+            text-shadow:
+                0 0 7px rgb(178, 224, 241),
+                0 0 10px rgb(159, 196, 243),
+                0 0 21px #fff,
+                0 0 42px #5384e0,
+                0 0 82px #2b9fec,
+                0 0 92px #57ade7,
+                0 0 102px #020f49,
+                0 0 151px #000000;
+        }
+
+        .waviy span {
+            font-family: 'Bebas Neue';
+            position: relative;
+            display: inline-block;
+            color: #fff;
+            animation: waviy 1s infinite;
+            animation-delay: calc(.1s * var(--i));
+
+        }
+
+
+        @keyframes waviy {
+
+            0%,
+            40%,
+            100% {
+                transform: translateY(0)
+            }
+
+            20% {
+                transform: translateY(-20px)
+            }
+        }
+
+        img {
+            border: 1px solid white;
+        }
+
+        p {
+            color: white;
+            font-family: Nunito;
+            font-size: 20px;
+            position: relative;
+            top: 10px;
+
+        }
+
+        i {
+            position: relative;
+            top: 10px;
+        }
+
+
+        #container {
+            background-color: none;
+            width: 95%;
+            height: 350px;
+            position: absolute;
+            top: 60%;
+            left: 2%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="waviy">
+        <span style="--i:1">G</span>
+        <span style="--i:2">A</span>
+        <span style="--i:3">M</span>
+        <span style="--i:4">E</span>
+
+
+        <span style="--i:5">Z</span>
+        <span style="--i:6">O</span>
+        <span style="--i:7">N</span>
+        <span style="--i:8">E</span>
+
+
+
+    </div>
+    <div id="container">
+        <div id="rpsd">
+            <img id="rps" src="static/rps.webp" width="200px" height="150px">
+            <p> Rock-Paper-Scissors</p>
+            <a href="RPS.html"><i class="fa fa-play" style="font-size:36px; color:white;"></i></a>
+        </div>
+        <div id="mdlbd">
+            <img id="mdlib" src="static/mdlibs.jpg" width="200px" height="200px">
+            <p>Madlibs</p>
+            <a href="madlibs.html"><i class="fa fa-play" style="font-size:36px; color:white;"></i></a>
+        </div>
+        <div id="tttd">
+            <img id="ttt" src="static/ttt.png" width="200px" height="200px">
+            <p>Tic-Tac-Toe</p>
+            <a href="tic-tac-toe.html"><i class="fa fa-play" style="font-size:36px; color:white;"></i></a>
+        </div>
+        <div id="snkd">
+            <img id="snk" src="static/snk.webp" width="200px" height="200px">
+            <p>Snake game</p>
+            <a href="snake.html"><i class="fa fa-play" style="font-size:36px; color:white;"></i></a>
+        </div>
+        <div id="mmd">
+            <img id="mm" src="static/mnm.jpg" width="230px" height="150px">
+            <p>Mix 'N' Match</p>
+            <a href="mixmatch.html"><i class="fa fa-play" style="font-size:36px; color:white;"></i></a>
+        </div>
+    </div>
+
+</body>
+
+</html>
